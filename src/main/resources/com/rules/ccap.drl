@@ -1,0 +1,30 @@
+package com.rule;
+import com.mypack.binding.PlanInfo;
+import com.mypack.binding.IndvInfo;
+
+rule "CCAP Plan Rules For Approved"
+
+
+	when 
+		indvInfo:IndvInfo(kidsCount !=0)
+then
+	PlanInfo planInfo=new PlanInfo();
+	planInfo.setPlanName("CCAP");
+	planInfo.setPlanStatus("Approved");
+	planInfo.setPlanStartDate("04-10-2021");
+	planInfo.setPlanEndDate("04-10-2022");
+	planInfo.setBenefitAmmount("$200.00");
+	indvInfo.setPlanInfo(planInfo);
+end
+	
+rule "CCAP Plan Rules For Denied"
+	when 
+			indvInfo:IndvInfo(kidsCount==0)
+then
+		PlanInfo planInfo=new PlanInfo();
+	planInfo.setPlanName("CCAP");
+	planInfo.setPlanStatus("Denied");
+	planInfo.setDenialReason("No Kids");
+	indvInfo.setPlanInfo(planInfo);
+end
+	
